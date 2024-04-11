@@ -24,6 +24,7 @@ function <<access.private>> meta::pure::changetoken::cast_generation::handleAddF
     typeVar: Code[1],
     typeKeyName: String[1],
     obsoleteJsonAsString: Boolean[1],
+    upcastAlwaysWork: Boolean[1],
     version: String[1],
     pathVar: Code[1],
     rootObjVar: Code[1],
