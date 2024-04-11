@@ -21,7 +21,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-public class GenerateCastCustomObjectTest extends GenerateCastTestBase
+public class GenerateCastCustomUpcastAlwaysWorkTest extends GenerateCastTestBase
 {
     @BeforeClass
     public static void setupSuite() throws IOException, ClassNotFoundException
@@ -62,7 +62,7 @@ public class GenerateCastCustomObjectTest extends GenerateCastTestBase
                 "      ]\n" +
                 "    }\n" +
                 "  ]\n" +
-                "}");
+                "}", true, false, false, true);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class GenerateCastCustomObjectTest extends GenerateCastTestBase
     @Test
     public void testUpcastNonDefault() throws JsonProcessingException, NoSuchMethodException, InvocationTargetException, IllegalAccessException
     {
-        exception(() -> upcast("{\n" +
+        expect(upcast("{\n" +
                         "  \"version\":\"ftdm:abcdefg123\", \n" +
                         "  \"@type\": \"meta::pure::changetoken::tests::SampleClass\",\n" +
                         "  \"innerObject\": {\"@type\": \"meta::pure::changetoken::tests::SampleClass\", \"abc\": {\"@type\":\"Custom\", \"restricted\":true, \"range\":{\"min\":-1, \"max\":1, \"@type\":\"intMinMax\", \"round\":0.5}, \"value\":0}},\n" +
@@ -126,7 +126,16 @@ public class GenerateCastCustomObjectTest extends GenerateCastTestBase
                         "  ],\n" +
                         "  \"abc\": {\"@type\":\"Custom\", \"restricted\":true, \"range\":{\"min\":-1, \"max\":1, \"@type\":\"intMinMax\", \"round\":0.5}, \"value\":0}}\n" +
                         "}\n"),
-                "Cannot overwrite existing non-default value:{@type=Custom, restricted=true, range={min=0, round=0.5, max=1, @type=intMinMax}, value=0}");
+                "{\n" +
+                        "  \"version\":\"ftdm:abcdefg456\",\n" +
+                        "  \"@type\": \"meta::pure::changetoken::tests::SampleClass\",\n" +
+                        "  \"innerObject\": {\"@type\": \"meta::pure::changetoken::tests::SampleClass\", \"abc\": {\"@type\":\"Custom\", \"restricted\":true, \"range\":{\"min\":-1, \"max\":1, \"@type\":\"intMinMax\", \"round\":0.5}, \"value\":0}},\n" +
+                        "  \"innerNestedArray\":[\n" +
+                        "    {\"@type\": \"meta::pure::changetoken::tests::SampleClass\", \"abc\": {\"@type\":\"Custom\", \"restricted\":true, \"range\":{\"min\":-1, \"max\":1, \"@type\":\"intMinMax\", \"round\":0.5}, \"value\":0}},\n" +
+                        "    [{\"@type\": \"meta::pure::changetoken::tests::SampleClass\", \"abc\": {\"@type\":\"Custom\", \"restricted\":true, \"range\":{\"min\":0, \"max\":1, \"@type\":\"intMinMax\", \"round\":0.5}, \"value\":0}}]\n" +
+                        "  ],\n" +
+                        "  \"abc\": {\"@type\":\"Custom\", \"restricted\":true, \"range\":{\"min\":-1, \"max\":1, \"@type\":\"intMinMax\", \"round\":0.5}, \"value\":0}}\n" +
+                        "}\n");
     }
 
     @Test
