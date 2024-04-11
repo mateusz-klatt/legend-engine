@@ -49,30 +49,35 @@ public abstract class GenerateCastTestBase
 
     public static void setupSuiteFromVersions(Root_meta_pure_changetoken_Versions versions) throws IOException, ClassNotFoundException
     {
-        setupSuiteFrom(versions, "versions", true, false, true, "@type", "version");
+        setupSuiteFrom(versions, "versions", true, false, true, false, "@type", "version");
     }
 
     public static void setupSuiteFromJson(String json) throws IOException, ClassNotFoundException
     {
-        setupSuiteFromJson(json, true, false, true, "@type", "version");
+        setupSuiteFromJson(json, true, false, true, false, "@type", "version");
     }
 
     public static void setupSuiteFromJson(String json, String typeKeyName, String versionKeyName) throws IOException, ClassNotFoundException
     {
-        setupSuiteFromJson(json, true, false, true, typeKeyName, versionKeyName);
+        setupSuiteFromJson(json, true, false, true, false, typeKeyName, versionKeyName);
     }
 
     public static void setupSuiteFromJson(String json, boolean alwaysStampAtRootVersion, boolean optionalStampAllVersions, boolean obsoleteJsonAsString) throws IOException, ClassNotFoundException
     {
-        setupSuiteFrom(json, "json", alwaysStampAtRootVersion, optionalStampAllVersions, obsoleteJsonAsString, "@type", "version");
+        setupSuiteFromJson(json, alwaysStampAtRootVersion, optionalStampAllVersions, obsoleteJsonAsString, false);
     }
 
-    private static void setupSuiteFromJson(String json, boolean alwaysStampAtRootVersion, boolean optionalStampAllVersions, boolean obsoleteJsonAsString, String typeKeyName, String versionKeyName) throws IOException, ClassNotFoundException
+    public static void setupSuiteFromJson(String json, boolean alwaysStampAtRootVersion, boolean optionalStampAllVersions, boolean obsoleteJsonAsString, boolean upcastAlwaysWork) throws IOException, ClassNotFoundException
     {
-        setupSuiteFrom(json, "json", alwaysStampAtRootVersion, optionalStampAllVersions, obsoleteJsonAsString, typeKeyName, versionKeyName);
+        setupSuiteFrom(json, "json", alwaysStampAtRootVersion, optionalStampAllVersions, obsoleteJsonAsString, upcastAlwaysWork, "@type", "version");
     }
 
-    private static void setupSuiteFrom(Object fromValue, String generatorType, boolean alwaysStampAtRootVersion, boolean optionalStampAllVersions, boolean obsoleteJsonAsString, String typeKeyName, String versionKeyName) throws IOException, ClassNotFoundException
+    private static void setupSuiteFromJson(String json, boolean alwaysStampAtRootVersion, boolean optionalStampAllVersions, boolean obsoleteJsonAsString, boolean upcastAlwaysWork, String typeKeyName, String versionKeyName) throws IOException, ClassNotFoundException
+    {
+        setupSuiteFrom(json, "json", alwaysStampAtRootVersion, optionalStampAllVersions, obsoleteJsonAsString, upcastAlwaysWork, typeKeyName, versionKeyName);
+    }
+
+    private static void setupSuiteFrom(Object fromValue, String generatorType, boolean alwaysStampAtRootVersion, boolean optionalStampAllVersions, boolean obsoleteJsonAsString, boolean upcastAlwaysWork, String typeKeyName, String versionKeyName) throws IOException, ClassNotFoundException
     {
         Path generatedSourcesDirectory = tmpFolder.newFolder("generated-sources", "java").toPath();
         String classpath = new ClassGraph().getClasspath();
@@ -93,6 +98,7 @@ public abstract class GenerateCastTestBase
         generateCastProject.setAlwaysStampAtRootVersion(alwaysStampAtRootVersion);
         generateCastProject.setOptionalStampAllVersions(optionalStampAllVersions);
         generateCastProject.setObsoleteJsonAsString(obsoleteJsonAsString);
+        generateCastProject.setUpcastAlwaysWork(upcastAlwaysWork);
         generateCastProject.setTypeKeyName(typeKeyName);
         generateCastProject.setVersionKeyName(versionKeyName);
         generateCastProject.execute();
