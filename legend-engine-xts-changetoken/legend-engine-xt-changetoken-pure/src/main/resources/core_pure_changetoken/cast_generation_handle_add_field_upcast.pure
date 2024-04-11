@@ -36,9 +36,16 @@ function <<access.private>> meta::pure::changetoken::cast_generation::handleAddF
             df: ConstValue[1] |
             [
                 $valVar->j_declare(getValueAsFieldType($token.fieldType, $df.value, $typeKeyName, $obsoleteJsonAsString)),
+                if($upcastAlwaysWork, | j_block([]),
+                |
                 j_if($resVar->j_invoke('get', [j_string($token.fieldName)], javaObject())->j_ne(j_null())->j_and($resVar->j_invoke('get', [j_string($token.fieldName)], javaObject())->j_invoke('equals', $valVar)->j_not()),
-                    javaRuntimeException()->j_new([j_string('Cannot overwrite existing non-default value:')->j_plus($resVar->j_invoke('get', [j_string($token.fieldName)], javaObject()))])->j_throw()),
+                    javaRuntimeException()->j_new([j_string('Cannot overwrite existing non-default value:')->j_plus($resVar->j_invoke('get', [j_string($token.fieldName)], javaObject()))])->j_throw())
+                ),
+                if($upcastAlwaysWork,
+                | j_if($resVar->j_invoke('get', [j_string($token.fieldName)], javaObject())->j_ne(j_null()), $resVar->j_invoke('put', [j_string($token.fieldName), $valVar], javaVoid())),
+                |
                 $resVar->j_invoke('put', [j_string($token.fieldName), $valVar], javaVoid())
+                )
             ],
             df: CopyValue[1] |
             [
