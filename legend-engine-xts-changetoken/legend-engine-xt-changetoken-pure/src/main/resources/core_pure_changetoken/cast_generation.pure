@@ -40,6 +40,7 @@ function meta::pure::changetoken::cast_generation::generateCastFromVersions(
   alwaysStampAtRootVersion: Boolean[1],
   optionalStampAllVersions: Boolean[1],
   obsoleteJsonAsString: Boolean[1],
+  upcastAlwaysWork: Boolean[1],
   typeKeyName: String[1],
   versionKeyName: String[0..1],
   versions:Versions[1], outputClassName:String[1]):Project[1]
