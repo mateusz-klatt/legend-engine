@@ -50,8 +50,8 @@ function meta::pure::changetoken::cast_generation::generateCastFromVersions(
   
   newProject()->addClass(
     $class
-      ->generateMainUpcast($alwaysStampAtRootVersion, $optionalStampAllVersions, $obsoleteJsonAsString, $typeKeyName, $versionKeyName, $versions)
-      ->generateMainDowncast($alwaysStampAtRootVersion, $optionalStampAllVersions, $obsoleteJsonAsString, $typeKeyName, $versionKeyName, $versions)
+      ->generateMainUpcast($alwaysStampAtRootVersion, $optionalStampAllVersions, $obsoleteJsonAsString, $upcastAlwaysWork, $typeKeyName, $versionKeyName, $versions)
+      ->generateMainDowncast($alwaysStampAtRootVersion, $optionalStampAllVersions, $obsoleteJsonAsString, $upcastAlwaysWork, $typeKeyName, $versionKeyName, $versions)
       ->generateMainVersions($versions)
       ->generateMainUtils()
   );

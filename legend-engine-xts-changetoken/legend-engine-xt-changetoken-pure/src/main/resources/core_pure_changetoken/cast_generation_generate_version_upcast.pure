@@ -22,6 +22,7 @@ function <<access.private>> meta::pure::changetoken::cast_generation::generateVe
     alwaysStampAtRootVersion: Boolean[1],
     optionalStampAllVersions: Boolean[1],
     obsoleteJsonAsString: Boolean[1],
+    upcastAlwaysWork: Boolean[1],
     typeKeyName: String[1],
     versionKeyName: String[0..1],
     version: Version[1]): Pair<Code, meta::external::language::java::metamodel::Class>[1]
@@ -43,7 +44,7 @@ function <<access.private>> meta::pure::changetoken::cast_generation::generateVe
     let pathVar = j_parameter(javaList(javaObject()), 'path');
     let changeTokenHandlers = $version.changeTokens
         ->map(t | $t->match([
-            t: AddField[1] | handleAddFieldUpcast($class2, $t, $objVar, $typeVar, $typeKeyName, $obsoleteJsonAsString, $version.version, $pathVar, $rootObjVar, $resVar),
+            t: AddField[1] | handleAddFieldUpcast($class2, $t, $objVar, $typeVar, $typeKeyName, $obsoleteJsonAsString, $upcastAlwaysWork, $version.version, $pathVar, $rootObjVar, $resVar),
             t: RemoveField[1] | handleAddFieldDowncast($class2, $t, $objVar, $typeVar, $typeKeyName, $obsoleteJsonAsString, $version.version, $pathVar, $rootObjVar, $resVar),
             t: RenameField[1] | handleRenameFieldUpcast($class2, $t, $objVar, $typeVar, $version.version, $pathVar, $rootObjVar, $resVar),
             t: AddedClass[1] | [],
