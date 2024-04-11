@@ -27,6 +27,7 @@ public class GenerateCastFromVersions extends GenerateJavaProject
     private boolean alwaysStampAtRootVersion = true;
     private boolean optionalStampAllVersions = false;
     private boolean obsoleteJsonAsString = true;
+    private boolean upcastAlwaysWork = false;
     private String typeKeyName = "@type";
     private String versionKeyName = "version";
 
@@ -67,6 +68,16 @@ public class GenerateCastFromVersions extends GenerateJavaProject
         this.obsoleteJsonAsString = obsoleteJsonAsString;
     }
 
+    public boolean doesUpcastAlwaysWork()
+    {
+        return obsoleteJsonAsString;
+    }
+
+    public void setUpcastAlwaysWork(boolean upcastAlwaysWork)
+    {
+        this.upcastAlwaysWork = upcastAlwaysWork;
+    }
+
     public String getTypeKeyName()
     {
         return typeKeyName;
@@ -95,9 +106,10 @@ public class GenerateCastFromVersions extends GenerateJavaProject
 
     protected Root_meta_external_language_java_metamodel_project_Project doExecute(Root_meta_pure_changetoken_Versions versions, CompiledExecutionSupport executionSupport)
     {
-        return core_pure_changetoken_cast_generation.Root_meta_pure_changetoken_cast_generation_generateCastFromVersions_Boolean_1__Boolean_1__Boolean_1__String_1__String_$0_1$__Versions_1__String_1__Project_1_(
+        return core_pure_changetoken_cast_generation.Root_meta_pure_changetoken_cast_generation_generateCastFromVersions_Boolean_1__Boolean_1__Boolean_1__Boolean_1__String_1__String_$0_1$__Versions_1__String_1__Project_1_(
                 alwaysStampAtRootVersion, optionalStampAllVersions,
                 obsoleteJsonAsString,
+                upcastAlwaysWork,
                 typeKeyName, versionKeyName,
                 versions, outputClassName, executionSupport);
     }
