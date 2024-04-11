@@ -22,6 +22,7 @@ function <<access.private>> meta::pure::changetoken::cast_generation::generateMa
     alwaysStampAtRootVersion: Boolean[1],
     optionalStampAllVersions: Boolean[1],
     obsoleteJsonAsString: Boolean[1],
+    upcastAlwaysWork: Boolean[1],
     typeKeyName: String[1],
     versionKeyName: String[0..1],
     versions: Versions[1]): meta::external::language::java::metamodel::Class[1]
@@ -36,6 +37,7 @@ function <<access.private>> meta::pure::changetoken::cast_generation::generateMa
                 let p = $resP.second->generateVersionUpcast(
                     $alwaysStampAtRootVersion, $optionalStampAllVersions,
                     $obsoleteJsonAsString,
+                    $upcastAlwaysWork,
                     $typeKeyName, $versionKeyName,
                     $ver);
                 let resPF = $resP.first;
